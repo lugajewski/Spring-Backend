@@ -1,9 +1,7 @@
 package com.example.demo.contact;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -20,5 +18,20 @@ public ContactController(ContactService contactService) {
     public List<Contact> getContacts()
     {
         return contactService.getContacts();
+    }
+    @PostMapping
+    public void registerNewContact(@RequestBody Contact contact)
+    {
+        contactService.addNewContact(contact);
+    }
+@DeleteMapping(path = "{contactId}")
+    public void deleteContact(@PathVariable("contactId") int contactId)
+    {
+        contactService.deleteContact(contactId);
+    }
+    @PutMapping(path = "{contactId}")
+    public void updateContact(@PathVariable("contactId")int contactId,@RequestParam String name,@RequestParam int number)
+    {
+        contactService.updateContact(contactId,name,number);
     }
 }
